@@ -8,15 +8,28 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <load src="./partials/header.html" icon-path="img/sprite.svg#logo" />
-
     <main>
-      <!-- Loads the specified .html file -->
-      <load src="./partials/vite-promo.html" />
-      <load src="./partials/badges.html" />
+      <aside class="gallery--block container">
+        <div class="api--form_block">
+          <form action="submit" class="form">
+            <label for="search">
+              <input
+                type="search"
+                name="search"
+                placeholder="Search images..."
+                id="form--input"
+              />
+            </label>
+            <button type="submit" class="get--seurch_button">Search</button>
+          </form>
+        </div>
+        <div class="gallery--wrapper">
+          <span class="loader hidden"></span>
+          <ul class="gallery"></ul>
+        </div>
+        <button class="get--seurch_button more hidden">Load more</button>
+      </aside>
     </main>
-
-    <load src="./partials/footer.html" />
 
     <script type="module" src="./main.js"></script>
   </body>
