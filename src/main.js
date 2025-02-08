@@ -141,9 +141,22 @@ nextLoading.addEventListener("click", async () => {
 
       refreshPage.refresh();
 
-      if (page === totalPages) {
+      if (page === totalPages || data.hits <= totalPages) {
 
         nextLoading.style.display = "none";
+
+        iziToast.error({
+            title: 'No images data',
+            message: 'You have viewed all images.',
+
+            titleColor: 'white',
+            messageColor: 'white',
+            titleSize: '12px',
+            backgroundColor: '#ef4040',
+
+            iconColor: 'white',
+            position: 'topRight'
+        })
       }
 })
 

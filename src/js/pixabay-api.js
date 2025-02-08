@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const perPage = 40;
+export const perPage = 140;
 
 /*  Function  API  */
 
