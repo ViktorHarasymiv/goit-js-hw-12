@@ -18,15 +18,18 @@ const nextLoading = document.querySelector('.more');
 
 const form = document.querySelector(".form");
 
-// Controls the group number
-let page = 1;
 
 // Controls the number of items in the group
 import { perPage } from "./js/pixabay-api";
 
-let inputValue = '';
+
+// Controls the group number
+let page = 1;
+
 
 /*  Setup for gallery render */
+let inputValue = '';
+
 
 const refreshPage = new SimpleLightbox('.gallery a', {
     captions: true,
@@ -71,9 +74,23 @@ form.addEventListener("submit" , async (event) => {
          return;
     }
 
-     await getImages(inputValue, page)
+
+await getImages(inputValue, page)
+
     .then(data => {
-            if (!data.hits.length) {
+
+        nextLoading.style.display = "block";
+
+        // To start page
+        page = 1;
+
+        const totalPages = Math.ceil(data.totalHits / perPage);
+           
+          if (page === totalPages) {
+            nextLoading.style.display = "none";
+          }
+
+          if (!data.hits.length) {
                 iziToast.warning({
                        title: 'Warning',
                        message: 'Sorry, there are no images matching your search query. Please try again!',
@@ -91,9 +108,9 @@ form.addEventListener("submit" , async (event) => {
                 loader.classList.add('hidden');
                 nextLoading.classList.add('hidden');
 
-                form.reset();
+          } 
 
-            } else {
+           else {
         
             listImages.insertAdjacentHTML("beforeend", createMarkup(data.hits));
     
@@ -103,10 +120,12 @@ form.addEventListener("submit" , async (event) => {
             refreshPage.refresh();
             form.reset();
 
-            }
+          }
+
         })
 
     .catch(error => {
+            loader.classList.add('hidden');
             iziToast.error({
                 title: 'Error',
                 message: 'Something went wrong. Please try again later.',
@@ -119,48 +138,47 @@ form.addEventListener("submit" , async (event) => {
                 iconColor: 'white',
                 position: 'topRight'
             })
-
-            form.reset()
         });
+
 });
 
 nextLoading.addEventListener("click", async () => {
+    
+    nextLoading.style.display = "none";
+
+    loader.style.top = 93 + "%";
+    loader.classList.remove('hidden');
 
     // Increase page number
     page += 1;
+
 
    await getImages(inputValue, page)
     
     .then(data => {
     
+      nextLoading.style.display = "block";
+      loader.classList.add('hidden');
+
+
       const totalPages = Math.ceil(data.totalHits / perPage);
 
       listImages.insertAdjacentHTML("beforeend", createMarkup(data.hits));
 
       scrollByElemHeight();
-
+  
       refreshPage.refresh();
+      
+      loader.style.top = 50 + "%";
 
       if (page === totalPages || data.hits <= totalPages) {
-
+        loader.classList.add('hidden');
         nextLoading.style.display = "none";
-
-        iziToast.error({
-            title: 'No images data',
-            message: 'You have viewed all images.',
-
-            titleColor: 'white',
-            messageColor: 'white',
-            titleSize: '12px',
-            backgroundColor: '#ef4040',
-
-            iconColor: 'white',
-            position: 'topRight'
-        })
       }
 })
 
     .catch(error => {
+        loader.classList.add('hidden');
         iziToast.error({
             title: 'Error',
             message: 'Something went wrong. Please try again later.',
@@ -173,7 +191,5 @@ nextLoading.addEventListener("click", async () => {
             iconColor: 'white',
             position: 'topRight'
         })
-
-        form.reset()
     });
   })

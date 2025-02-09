@@ -1,7 +1,15 @@
 .api--form_block {
-    margin: 36px auto 0px;
+    position: sticky;
+
+    top: 0;
+
+    margin: auto 0px;
+
+    padding: 25px 0px;
 
     width: 100%;
+    background-color: rgba(255, 255, 255, .9);
+    border-bottom: 3px solid #4E75FF;
 }
 
 .form {
@@ -79,6 +87,8 @@ input[type="search" i]:focus {
 /* Gallery */
 
 .gallery--wrapper {
+    margin-bottom: 100px;
+
     display: flex;
     justify-content: center;
     align-self: center;
@@ -100,6 +110,7 @@ input[type="search" i]:focus {
     border-left: 1px solid #808080;
     border-right: 1px solid #808080;
 }
+
 .gallery--link {
     display: block;
 }
@@ -139,14 +150,19 @@ input[type="search" i]:focus {
 }
 
 .loader {
+    position: fixed;
+
     width: 48px;
     height: 48px;
-    border-radius: 50%;
-    position: absolute;
+
     top: 50%;
-    bottom: 50%;
-    transform: translate(-50%, -50%);
+
+    transform: translateY(-50%);
+
     border: 10px solid;
+    
+    border-radius: 50%;
+
     box-sizing: border-box;
     animation: animloader 1s linear infinite alternate;
   }
@@ -171,8 +187,8 @@ input[type="search" i]:focus {
 .more {
     display: block;
 
-    margin: 0 auto;
-    margin-top: 35px;
+    margin: -50px auto 20px;
+
     width: 125px;
 }
 

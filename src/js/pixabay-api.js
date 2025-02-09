@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const perPage = 140;
+export const perPage = 40;
 
 /*  Function  API  */
 
@@ -21,9 +21,12 @@ export async function getImages(inputValue, page) {
             per_page: perPage,
         }
     })
+
     return response.data;
     }
+
     catch {
         throw new Error(res.statusText);
         }
-}
+
+    }
