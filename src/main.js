@@ -1,4 +1,4 @@
-/* Import */
+/*  Import  */
 
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
@@ -18,24 +18,20 @@ const nextLoading = document.querySelector('.more');
 
 const form = document.querySelector(".form");
 
-
-// Controls the number of items in the group
 import { perPage } from "./js/pixabay-api";
-
-
-// Controls the group number
 let page = 1;
 
 
 /*  Setup for gallery render */
-let inputValue = '';
 
+let inputValue = '';
 
 const refreshPage = new SimpleLightbox('.gallery a', {
     captions: true,
     captionsData: 'alt',
     captionDelay: 250,
 });
+
 
 /*   A P I  S E R V I E S   */ 
 
@@ -74,15 +70,13 @@ form.addEventListener("submit" , async (event) => {
          return;
     }
 
+    try { 
+          const data = await getImages(inputValue, page);
 
-await getImages(inputValue, page)
-
-    .then(data => {
-
-        nextLoading.style.display = "block";
+          nextLoading.style.display = "block";
 
         // To start page
-        page = 1;
+          page = 1;
 
         const totalPages = Math.ceil(data.totalHits / perPage);
            
@@ -122,9 +116,10 @@ await getImages(inputValue, page)
 
           }
 
-        })
 
-    .catch(error => {
+          } 
+          
+    catch(error) {
             loader.classList.add('hidden');
             iziToast.error({
                 title: 'Error',
@@ -138,10 +133,12 @@ await getImages(inputValue, page)
                 iconColor: 'white',
                 position: 'topRight'
             })
-        });
+          }
+    })
 
-});
 
+/*  Load more button setup  */
+ 
 nextLoading.addEventListener("click", async () => {
     
     nextLoading.style.display = "none";
@@ -192,4 +189,5 @@ nextLoading.addEventListener("click", async () => {
             position: 'topRight'
         })
     });
+    
   })

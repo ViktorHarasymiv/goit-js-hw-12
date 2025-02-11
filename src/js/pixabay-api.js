@@ -9,8 +9,8 @@ export async function getImages(inputValue, page) {
     const KEY = "48554296-d2b735e3ffae040ef4553c6bb";
 
     try {
-
-    const response = await axios.get(`https://pixabay.com/api/` , {
+        const response = await axios.get(`https://pixabay.com/api/` , {
+            
         params: {
             key: KEY,
             q: inputValue,
